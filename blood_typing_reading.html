@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拓展阅读 · 无标记血型鉴定</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "Songti SC", Georgia, "Times New Roman", serif;
+            background: #f8f6f1;
+            color: #2c2c2c;
+            line-height: 1.9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Top accent bar ===== */
+        .top-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #c0392b 0%, #e67e22 50%, #c0392b 100%);
+        }
+
+        /* ===== Header ===== */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 28px 48px 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .course-title {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: #b8a58c;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background: #c0392b;
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+
+        .header-right img {
+            height: 52px;
+            width: auto;
+            display: block;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .header-right img:hover {
+            opacity: 1;
+        }
+
+        /* ===== Decorative wave separator ===== */
+        .wave-sep {
+            max-width: 1000px;
+            margin: 18px auto 0;
+            width: calc(100% - 96px);
+            height: 24px;
+            overflow: hidden;
+            color: #ddd5c9;
+        }
+
+        /* ===== Main ===== */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 32px 48px 80px;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* ===== Content card ===== */
+        .content-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 40px 48px 48px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+            max-width: 760px;
+        }
+
+        .reading-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: #c0392b;
+            background: #fef0e8;
+            padding: 3px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.8px;
+            margin-bottom: 24px;
+        }
+
+        .reading-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #c0392b;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50%      { opacity: 1; }
+        }
+
+        /* ===== Paragraphs ===== */
+        .content-card p {
+            font-size: 16px;
+            margin-bottom: 1.5em;
+            text-align: justify;
+            color: #333;
+            text-indent: 2em;
+        }
+
+        .content-card p:first-of-type {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            text-indent: 0;
+            line-height: 1.7;
+            padding: 0 0 8px 0;
+        }
+
+        /* ===== Data highlight pills ===== */
+        .data-pill {
+            display: inline-flex;
+            align-items: baseline;
+            background: #f3efe8;
+            border-radius: 6px;
+            padding: 1px 10px 1px 8px;
+            font-family: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+            font-weight: 600;
+            font-size: 0.95em;
+            color: #8b4513;
+            white-space: nowrap;
+        }
+
+        .data-pill em {
+            font-style: normal;
+            font-size: 1.1em;
+            color: #a04020;
+            margin-right: 1px;
+        }
+
+        /* ===== Analogy blockquote ===== */
+        .analogy {
+            margin: 28px 0 0;
+            padding: 20px 24px;
+            background: #f9f6f0;
+            border-left: 4px solid #c0392b;
+            border-radius: 0 8px 8px 0;
+            text-indent: 0 !important;
+            font-size: 17px !important;
+            color: #2a2a2a !important;
+            line-height: 1.8 !important;
+            position: relative;
+        }
+
+        .analogy::before {
+            content: '\201C';
+            font-size: 48px;
+            color: #d4c5b0;
+            position: absolute;
+            top: 4px;
+            left: 14px;
+            line-height: 1;
+            font-family: Georgia, serif;
+        }
+
+        .analogy span {
+            display: block;
+            padding-left: 28px;
+        }
+
+        /* ===== Footnote ===== */
+        .footnote {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 36px;
+            padding-top: 16px;
+            border-top: 1px solid #ece8e0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .footnote .dot {
+            color: #d0c8bc;
+        }
+
+        .footnote a {
+            color: #8b7355;
+            text-decoration: none;
+            border-bottom: 1px dotted #d0c8bc;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .footnote a:hover {
+            color: #c0392b;
+            border-bottom-color: #c0392b;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 720px) {
+            header {
+                padding: 24px 20px 0;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .section-title::after {
+                width: 32px;
+            }
+
+            .wave-sep {
+                width: calc(100% - 40px);
+            }
+
+            main {
+                padding: 24px 16px 60px;
+            }
+
+            .content-card {
+                padding: 28px 20px 36px;
+                border-radius: 8px;
+            }
+
+            .content-card p {
+                font-size: 15px;
+            }
+
+            .content-card p:first-of-type {
+                font-size: 16px;
+            }
+
+            .analogy {
+                padding: 16px 16px 16px 20px;
+                font-size: 15px !important;
+            }
+
+            .analogy::before {
+                font-size: 36px;
+                left: 8px;
+            }
+
+            .analogy span {
+                padding-left: 20px;
+            }
+
+            .data-pill {
+                font-size: 0.9em;
+                padding: 0 8px 0 6px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .header-right {
+                align-self: flex-end;
+            }
+
+            .content-card {
+                padding: 20px 16px 28px;
+            }
+        }
+
+        /* ===== Print ===== */
+        @media print {
+            body {
+                background: white;
+            }
+            .content-card {
+                box-shadow: none;
+                padding: 20px 0;
+            }
+            .top-bar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar"></div>
+
+    <header>
+        <div class="header-left">
+            <span class="course-title">生理学基础 · 第三章 血液</span>
+            <span class="section-title">拓展阅读</span>
+        </div>
+        <div class="header-right">
+            <img src="logo.png" alt="Logo">
+        </div>
+    </header>
+
+    <svg class="wave-sep" viewBox="0 0 904 24" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 12 Q 113 0, 226 12 T 452 12 T 678 12 T 904 12" stroke="#ddd5c9" stroke-width="1.5" fill="none"/>
+        <path d="M0 20 Q 113 8, 226 20 T 452 20 T 678 20 T 904 20" stroke="#e8e0d6" stroke-width="1" fill="none"/>
+    </svg>
+
+    <main>
+        <div class="content-card">
+            <span class="reading-badge">前沿技术</span>
+
+            <p>这是一种不需要任何试剂的全新血型检测技术，它完全不需要抗原抗体反应。</p>
+
+            <p>操作方法是把全血注入微毛细管，采集拉曼光谱（拉曼散射表征分子振动模式），然后用机器学习模型直接从光谱特征中推断血型。2024年发表于《先进材料技术》的论文《基于拉曼光谱与人工智能的无标记血型鉴定》一文展示的结果是：只用单一拉曼光谱，模型能同时分类ABO血型、<span class="data-pill"><em>27</em>种</span>红细胞抗原、<span class="data-pill"><em>4</em>种</span>血小板抗原，还能判断抗-B滴度和ABH分泌者状态。</p>
+
+            <p>这背后的逻辑是：不同血型抗原的分子结构差异，会在拉曼光谱上留下可学习的特征痕迹。AI的角色是从高维、低信噪比的光谱数据中提取人类无法直接解读的指纹信息。</p>
+
+            <p class="analogy"><span>这不是替代人眼，而是拓展了一种全新的感知通道——就像靠气味认人。</span></p>
+
+            <div class="footnote">
+                <span>来源</span>
+                <span class="dot">·</span>
+                <em>Advanced Materials Technologies</em>, 2024
+                <span class="dot">·</span>
+                <a href="#" onclick="return false;">基于拉曼光谱与人工智能的无标记血型鉴定</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
